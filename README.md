@@ -1,7 +1,7 @@
 
 # ChatApp
 
-An iOS realtime chat application I built as code practice. The project was created following LBTA's Firebase tutorial and then refined using the MVVM+C pattern.
+An iOS realtime chat application I built as code practice. The project was created following LBTA's Firebase tutorial and then refined using the MVVM+C pattern. The application features login/register functionality and text/image/video chat in real time.
 
 This application was mainly done as an intro to Firebase, a practice for creating views without storyboards/nibs and for learning the MVVM+C pattern. Also, the goal was to use as little frameworks as possible, but I may add some in the future to make the code more concise.
 
