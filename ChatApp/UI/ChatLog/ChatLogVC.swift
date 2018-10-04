@@ -166,18 +166,15 @@ extension ChatLogVC: ChatInputContainerViewDelegate {
 extension ChatLogVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     @objc func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        // Local variable inserted by Swift 4.2 migrator.
-        let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
         
-        
-        if let videoUrl = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.mediaURL)] as? URL {
+        if let videoUrl = info[UIImagePickerController.InfoKey.mediaURL] as? URL {
             vm.sendMessageWith(videoUrl: videoUrl)
         } else {
             var pickedImage: UIImage?
             
-            if let editedImage = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.editedImage)] as? UIImage {
+            if let editedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
                 pickedImage = editedImage
-            } else if let originalImage = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.originalImage)] as? UIImage {
+            } else if let originalImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
                 pickedImage = originalImage
             }
             
@@ -289,14 +286,4 @@ extension ChatLogVC: ChatMessageCellDelegate {
             })
         }
     }
-}
-
-// Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [UIImagePickerController.InfoKey: Any]) -> [String: Any] {
-    return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
-}
-
-// Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertFromUIImagePickerControllerInfoKey(_ input: UIImagePickerController.InfoKey) -> String {
-    return input.rawValue
 }
