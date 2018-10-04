@@ -6,9 +6,6 @@
 //  Copyright © 2018 Antonio Ivcec. All rights reserved.
 //
 
-import UIKit
-import Firebase
-
 class Message: NSObject {
     @objc var fromId: String?
     @objc var toId: String?
@@ -18,8 +15,4 @@ class Message: NSObject {
     @objc var imageWidth: NSNumber?
     @objc var imageHeight: NSNumber?
     @objc var videoUrl: String?
-    
-    func chatPartnerId() -> String? {
-        return (fromId == Auth.auth().currentUser?.uid) ? toId : fromId
-    }
 }

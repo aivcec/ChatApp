@@ -72,7 +72,7 @@ class MessagesService: BaseService {
                 let message = Message()
                 message.setValuesForKeys(dictionary)
                 
-                if let partnerId = message.chatPartnerId() {
+                if let partnerId = self.chatPartnerId(for: message) {
                     self.fetchUser(id: partnerId) { user in
                         completion(message, user)
                     }
@@ -82,12 +82,20 @@ class MessagesService: BaseService {
     }
     
     func deleteMessage(message: Message) {
-        guard let uid = authRef.currentUser?.uid, let partnerId = message.chatPartnerId() else { return }
+        guard let uid = authRef.currentUser?.uid, let partnerId = chatPartnerId(for: message) else { return }
         
         databaseRef.child(Node.userMessages).child(uid).child(partnerId).removeValue { error, ref in
             if let error = error {
                 self.delegate?.service(self, didFailWithErrorTitle: error.localizedDescription)
             }
+        }
+    }
+    
+    private func chatPartnerId(for message: Message) -> String? {
+        if message.fromId == authRef.currentUser?.uid {
+            return message.toId
+        } else {
+            return message.fromId
         }
     }
 }
