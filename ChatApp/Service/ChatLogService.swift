@@ -48,18 +48,20 @@ class ChatLogService: BaseService {
         if let uploadData = image.jpegData(compressionQuality: 0.2) {
             ref.putData(uploadData, metadata: nil) { metadata, error in
                 if let error = error {
-                    print(error)
+                    self.delegate?.service(self, didFailWithErrorTitle: error.localizedDescription)
                     return
                 }
                 
                 ref.downloadURL { url, error in
-                    if error != nil {
-                        print(error)
+                    if let error = error {
+                        self.delegate?.service(self, didFailWithErrorTitle: error.localizedDescription)
                         return
                     }
                     
                     if let url = url?.absoluteString {
                         completion(url)
+                    } else {
+                        self.delegate?.service(self, didFailWithErrorTitle: "Problem fetching download url.")
                     }
                 }
             }
@@ -108,7 +110,6 @@ class ChatLogService: BaseService {
         
         uploadTask.observe(.progress) { snapshot in
             guard let progress = snapshot.progress else {
-                print("error")
                 return
             }
             
@@ -129,7 +130,7 @@ class ChatLogService: BaseService {
             let thumbnailCGImage = try imageGenerator.copyCGImage(at: CMTime(seconds: 1, preferredTimescale: 60), actualTime: nil)
             return UIImage(cgImage: thumbnailCGImage)
         } catch {
-            print(error)
+            delegate?.service(self, didFailWithErrorTitle: "Error generating thumbnail image.")
             return nil
         }
     }
@@ -137,12 +138,14 @@ class ChatLogService: BaseService {
     private func sendMessageWithProperties(_ properties: Parameters, toId: String?, completion: EmptyCompletionBlock? = nil) {
         guard let toId = toId, let fromId = authRef.currentUser?.uid else { return }
         
+        delegate?.serviceDidStartRequest(self, withIndicator: false)
+        
         let timestamp = Int(Date().timeIntervalSince1970)
         
         var values: Parameters = [
             "toId": toId,
-             "fromId": fromId,
-             "timestamp": timestamp
+            "fromId": fromId,
+            "timestamp": timestamp
         ]
         
         properties.forEach { property in values[property.key] = property.value }
@@ -160,6 +163,7 @@ class ChatLogService: BaseService {
             let recipientMessagesRef = self.databaseRef.child(Node.userMessages).child(toId).child(fromId)
             recipientMessagesRef.updateChildValues([ref.key: 1])
             
+            self.delegate?.serviceDidSucceed(self)
             completion?()
         }
     }

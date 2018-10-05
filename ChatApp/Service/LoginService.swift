@@ -33,7 +33,10 @@ class LoginService: BaseService {
                 return
             }
             
-            guard let uid = result?.user.uid else { return }
+            guard let uid = result?.user.uid else {
+                self.delegate?.service(self, didFailWithErrorTitle: "Problem fetching uid.")
+                return
+            }
             
             self.uploadImage(imageName: imageName, uploadData: uploadData) { url in
                 let values: Parameters  = [
@@ -64,7 +67,7 @@ class LoginService: BaseService {
                 if let url  = url {
                     completion(url)
                 } else {
-                    self.delegate?.service(self, didFailWithErrorTitle: "No url provided.")
+                    self.delegate?.service(self, didFailWithErrorTitle: "Problem fetching image url.")
                 }
             }
         }
