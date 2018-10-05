@@ -34,6 +34,10 @@
 		0394121D212C36EC009A22F5 /* MessagesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0394121C212C36EC009A22F5 /* MessagesVC.swift */; };
 		03A70B4A21623A1900A6F879 /* ChainedTextfField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A70B4921623A1900A6F879 /* ChainedTextfField.swift */; };
 		03B5682D21368BEF00661EB0 /* ChatMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B5682C21368BEF00661EB0 /* ChatMessageCell.swift */; };
+		03C423DF216767D600B7D26A /* StringValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C423DE216767D600B7D26A /* StringValidator.swift */; };
+		03C423E2216768AF00B7D26A /* LengthValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C423E1216768AF00B7D26A /* LengthValidator.swift */; };
+		03C423E42167690F00B7D26A /* EmailValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C423E32167690F00B7D26A /* EmailValidator.swift */; };
+		03C423E62167694200B7D26A /* String+matches.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C423E52167694200B7D26A /* String+matches.swift */; };
 		03DB5AB5214BC5D6001318A7 /* ChatInputContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DB5AB4214BC5D6001318A7 /* ChatInputContainerView.swift */; };
 		03E294EE2158EEB6000FDECB /* LoginVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E294ED2158EEB6000FDECB /* LoginVM.swift */; };
 		03E294F02158F83A000FDECB /* NewMessageVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E294EF2158F83A000FDECB /* NewMessageVM.swift */; };
@@ -93,6 +97,10 @@
 		0394121C212C36EC009A22F5 /* MessagesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesVC.swift; sourceTree = "<group>"; };
 		03A70B4921623A1900A6F879 /* ChainedTextfField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChainedTextfField.swift; sourceTree = "<group>"; };
 		03B5682C21368BEF00661EB0 /* ChatMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageCell.swift; sourceTree = "<group>"; };
+		03C423DE216767D600B7D26A /* StringValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringValidator.swift; sourceTree = "<group>"; };
+		03C423E1216768AF00B7D26A /* LengthValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LengthValidator.swift; sourceTree = "<group>"; };
+		03C423E32167690F00B7D26A /* EmailValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailValidator.swift; sourceTree = "<group>"; };
+		03C423E52167694200B7D26A /* String+matches.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+matches.swift"; sourceTree = "<group>"; };
 		03DB5AB4214BC5D6001318A7 /* ChatInputContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatInputContainerView.swift; sourceTree = "<group>"; };
 		03E294ED2158EEB6000FDECB /* LoginVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVM.swift; sourceTree = "<group>"; };
 		03E294EF2158F83A000FDECB /* NewMessageVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageVM.swift; sourceTree = "<group>"; };
@@ -203,6 +211,7 @@
 				03F8ED0C212AFDA200140AD3 /* UITextField+padding.swift */,
 				03FD6E1B214C113500022BCA /* NSObject+className.swift */,
 				03E294F521592EFF000FDECB /* CGRect+extension.swift */,
+				03C423E52167694200B7D26A /* String+matches.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -215,6 +224,16 @@
 				03136A9D215E18E40040E370 /* Initializable.swift */,
 			);
 			path = Interfaces;
+			sourceTree = "<group>";
+		};
+		03C423E02167689500B7D26A /* Validators */ = {
+			isa = PBXGroup;
+			children = (
+				03C423DE216767D600B7D26A /* StringValidator.swift */,
+				03C423E1216768AF00B7D26A /* LengthValidator.swift */,
+				03C423E32167690F00B7D26A /* EmailValidator.swift */,
+			);
+			path = Validators;
 			sourceTree = "<group>";
 		};
 		03C5B962215D3E5000CF281A /* SupportingFiles */ = {
@@ -295,6 +314,7 @@
 		03F8ED09212AEF8B00140AD3 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				03C423E02167689500B7D26A /* Validators */,
 				03136A9C215E18900040E370 /* Interfaces */,
 				03136A9B215E18860040E370 /* Extensions */,
 				03A70B4921623A1900A6F879 /* ChainedTextfField.swift */,
@@ -492,6 +512,9 @@
 				030B1656212C5B1C00879726 /* UserCell.swift in Sources */,
 				030BB483215E8EC300E4DA21 /* ChatLogInterfaces.swift in Sources */,
 				03FD6E1C214C113500022BCA /* NSObject+className.swift in Sources */,
+				03C423DF216767D600B7D26A /* StringValidator.swift in Sources */,
+				03C423E42167690F00B7D26A /* EmailValidator.swift in Sources */,
+				03C423E62167694200B7D26A /* String+matches.swift in Sources */,
 				03100FC6215BA8A500A5C353 /* BaseCoordinator.swift in Sources */,
 				03100FE2215BA98C00A5C353 /* SVRadialGradientLayer.m in Sources */,
 				03E294EE2158EEB6000FDECB /* LoginVM.swift in Sources */,
@@ -507,6 +530,7 @@
 				03E294F921593F5C000FDECB /* LoginService.swift in Sources */,
 				03E294FD215943FD000FDECB /* MessagesService.swift in Sources */,
 				030B1653212C585100879726 /* User.swift in Sources */,
+				03C423E2216768AF00B7D26A /* LengthValidator.swift in Sources */,
 				030BB485215E959D00E4DA21 /* NewMessageInterfaces.swift in Sources */,
 				03E294F02158F83A000FDECB /* NewMessageVM.swift in Sources */,
 			);
