@@ -14,7 +14,7 @@ class MessagesService: BaseService {
         }
     }
     
-    func logout(completion: @escaping (() -> ())) {
+    func logout(completion: @escaping EmptyCompletionBlock) {
         do {
             try authRef.signOut()
             completion()

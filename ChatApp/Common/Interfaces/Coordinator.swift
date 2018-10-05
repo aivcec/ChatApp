@@ -14,3 +14,7 @@ protocol Coordinator: class {
     func start()
     func finish()
 }
+
+protocol VMCoordinatorDelegate: class {
+    func showAlert(title: String, message: String?)
+}

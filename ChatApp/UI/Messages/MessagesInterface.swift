@@ -14,7 +14,7 @@ enum MessagesNavigationOption {
     case newMessage
 }
 
-protocol MessagesVMCoordinatorDelegate: class {
+protocol MessagesVMCoordinatorDelegate: VMCoordinatorDelegate {
     func navigate(to option: MessagesNavigationOption)
 }
 

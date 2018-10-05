@@ -31,15 +31,7 @@ class MessagesVM: MessagesVMType {
         self.service = service        
     }
     
-    // MARK: - Actions
-    
-    func checkIfLoggedIn() {
-        if service.isUserLoggedIn  {
-            setupUser()
-        } else {
-            coordinatorDelegate?.navigate(to: .login)
-        }
-    }
+    // MARK: - MessagesVMType methods
     
     func handleLogout() {
         service.logout {
@@ -49,37 +41,6 @@ class MessagesVM: MessagesVMType {
     
     func handleNewMessage() {
         coordinatorDelegate?.navigate(to: .newMessage)
-    }
-    
-    func attemptTableReload() {
-        timer?.invalidate()
-        timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.handleReload), userInfo: nil, repeats: false)
-    }
-    
-    @objc func handleReload() {
-        messagesData = Array(messagesDictionary.values)
-        messagesData.sort { d1, d2 in
-            guard let first = d1.message.timestamp?.intValue, let second = d2.message.timestamp?.intValue else { fatalError() }
-            
-            return first > second
-        }
-        
-        self.viewDelegate?.reloadRequired()
-    }
-    
-    func observeUserMessages() {
-        
-        service.observeMessageAdded { [weak self] message, user in
-            guard let id = user.id else { return }
-            
-            self?.messagesDictionary[id] = UserCellData(message: message, user: user)
-            self?.attemptTableReload()
-        }
-        
-        service.observeMessageRemoved { [weak self] messageId in
-            self?.messagesDictionary.removeValue(forKey: messageId)
-            self?.handleReload()
-        }
     }
     
     func handleDeleteAt(row: Int) {
@@ -94,15 +55,56 @@ class MessagesVM: MessagesVMType {
         }
     }
     
-    func setupUser() {
+    // MARK: - Actions
+    
+    private func checkIfLoggedIn() {
+        if service.isUserLoggedIn  {
+            setupUser()
+        } else {
+            coordinatorDelegate?.navigate(to: .login)
+        }
+    }
+    
+    private func setupObservers() {
+        
+        service.observeMessageAdded { [weak self] message, user in
+            guard let id = user.id else { return }
+            
+            self?.messagesDictionary[id] = UserCellData(message: message, user: user)
+            self?.attemptTableReload()
+        }
+        
+        service.observeMessageRemoved { [weak self] messageId in
+            self?.messagesDictionary.removeValue(forKey: messageId)
+            self?.handleReload()
+        }
+    }
+    
+    fileprivate func setupUser() {
         service.fetchCurrentUser { user in
             self.setupWithUser(user)
         }
     }
     
-    func setupWithUser(_ user: User) {
-        observeUserMessages()
+    private func setupWithUser(_ user: User) {
+        setupObservers()
         viewDelegate?.setupWithUser(user)
+    }
+    
+    private func attemptTableReload() {
+        timer?.invalidate()
+        timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.handleReload), userInfo: nil, repeats: false)
+    }
+    
+    @objc private func handleReload() {
+        messagesData = Array(messagesDictionary.values)
+        messagesData.sort { d1, d2 in
+            guard let first = d1.message.timestamp?.intValue, let second = d2.message.timestamp?.intValue else { fatalError() }
+            
+            return first > second
+        }
+        
+        self.viewDelegate?.reloadRequired()
     }
 }
 
@@ -115,8 +117,6 @@ extension MessagesVM: UserDelegate {
         messagesDictionary.removeAll()
         viewDelegate?.reloadRequired()
         
-        service.fetchCurrentUser { user in
-            self.setupWithUser(user)
-        }
+        setupUser()
     }
 }
