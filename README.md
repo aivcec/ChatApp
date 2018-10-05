@@ -7,8 +7,7 @@ This application was mainly done as an intro to Firebase, a practice for creatin
 
 **TODO**
 
-
-The core of the application is done, but I may add additional improvements, such as Firebase database simplifications/optimizations, textfield validators etc.
+The core of the application is done, but I may add additional improvements, such as Firebase database simplifications/optimizations.
 
 **References**
 
