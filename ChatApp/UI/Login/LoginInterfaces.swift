@@ -12,7 +12,7 @@ enum LoginNavigationOption {
     case login
 }
 
-protocol LoginVMCoordinatorDelegate: class {
+protocol LoginVMCoordinatorDelegate: VMCoordinatorDelegate {
     func navigate(to option: LoginNavigationOption)
 }
 

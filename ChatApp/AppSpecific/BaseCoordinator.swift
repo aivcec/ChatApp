@@ -43,6 +43,20 @@ class BaseCoordinator: Coordinator {
     }
 }
 
+extension BaseCoordinator: VMCoordinatorDelegate {
+    
+    func showAlert(title: String, message: String?) {
+        let ac = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Close", style: .cancel))
+        
+        if let presentedVC = rootNC.presentedViewController {
+            presentedVC.present(ac, animated: true)
+        } else {
+            rootNC.present(ac, animated: true)
+        }
+    }
+}
+
 extension BaseCoordinator: ServiceDelegateProtocol {
     
     func serviceDidStartRequest(_ service: Service, withIndicator showIndicator: Bool) {
