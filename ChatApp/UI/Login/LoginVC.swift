@@ -13,6 +13,8 @@ class LoginVC: UIViewController {
     // MARK: - Properties
     
     private var vm: LoginVMType!
+    private let chatImage: UIImage? = UIImage(named: "chat_icon")
+    private let addImage: UIImage? = UIImage(named: "add_icon")
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         get {
@@ -121,7 +123,7 @@ class LoginVC: UIViewController {
     lazy var profileImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(named: "chat_icon")
+        imageView.image = chatImage
         imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleSelectProfileImageView)))
         imageView.isUserInteractionEnabled = true
         imageView.contentMode = .scaleToFill
@@ -253,7 +255,10 @@ class LoginVC: UIViewController {
     }
     
     @objc func registerTapped() {
-        vm.register(email: emailTextField.text, password: passTextField.text, name: nameTextField.text, image: profileImageView.image)
+        vm.register(email: emailTextField.text,
+                    password: passTextField.text,
+                    name: nameTextField.text,
+                    image: profileImageView.image == addImage ? nil : profileImageView.image)
     }
     
     @objc func handleLoginRegisterChange() {
@@ -268,12 +273,12 @@ class LoginVC: UIViewController {
             inputContainerViewHeightAnchor?.constant = 100
             nameTextField.isHidden = true
             profileImageView.isUserInteractionEnabled = false
-            profileImageView.image = UIImage(named: "chat_icon")
+            profileImageView.image = chatImage
         } else {
             inputContainerViewHeightAnchor?.constant = 150
             nameTextField.isHidden = false
             profileImageView.isUserInteractionEnabled = true
-            profileImageView.image = UIImage(named: "add_icon")
+            profileImageView.image = addImage
         }
     }
     
