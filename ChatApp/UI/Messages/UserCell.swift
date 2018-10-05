@@ -58,7 +58,7 @@ class UserCell: UITableViewCell {
     
     func setupWith(cellData: UserCellData) {
         
-        detailTextLabel?.text = cellData.message.text
+        detailTextLabel?.text = cellData.displayText()
         textLabel?.text = cellData.user.name
         
         if let seconds = cellData.message.timestamp?.doubleValue {

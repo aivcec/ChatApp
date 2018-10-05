@@ -9,4 +9,14 @@
 struct UserCellData {
     let message: Message
     let user: User
+    
+    func displayText() -> String {
+        if let text = message.text {
+            return text
+        } else if message.videoUrl != nil {
+            return "Video message"
+        } else {
+            return "Image message"
+        }
+    }
 }
